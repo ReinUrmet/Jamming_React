@@ -1,0 +1,10 @@
+.column1{
+    width: 40rem;
+    height: 30rem;
+    background-color: rgb(146, 119, 197);
+}
+
+h2{
+    font-size: 3rem;
+    padding-top: 0.5rem;
+}

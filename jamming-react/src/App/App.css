@@ -1,0 +1,10 @@
+#root {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.title{
+  font-size: 7rem;
+  color: rgb(236, 161, 236);
+}

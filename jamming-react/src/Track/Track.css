@@ -1,0 +1,27 @@
+.track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Pushes button to the right */
+    padding: 10px;
+  }
+  
+  .track-info {
+    flex-grow: 1;
+  }
+  
+  .add-button {
+    background-color: rgb(146, 119, 197);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+  }
+  
+  .add-button:hover {
+    color: #0056b3;
+  }
+  
