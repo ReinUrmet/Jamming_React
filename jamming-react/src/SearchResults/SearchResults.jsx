@@ -1,14 +1,14 @@
 // SearchResults.jsx
 import React from "react";
 import "./SearchResults.css";
-
 import TrackList from "../TrackList/TrackList";
 
-function SearchResults({ tracks }) {
+function SearchResults({ tracks, onAdd }) {
   return (
     <div className="column1">
       <h2>Results</h2>
-      <TrackList tracks={tracks} />
+      {/* Pass onAdd to TrackList */}
+      <TrackList tracks={tracks} onAdd={onAdd} />
     </div>
   );
 }

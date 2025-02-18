@@ -1,7 +1,7 @@
 .track {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Pushes button to the right */
+    justify-content: space-between;
     padding: 10px;
   }
   
@@ -9,19 +9,29 @@
     flex-grow: 1;
   }
   
-  .add-button {
-    background-color: rgb(146, 119, 197);
+  .add-button, .remove-button {
+    background-color: rgba(1, 1, 1, 0);;
     color: white;
     border: none;
     padding: 5px 10px;
-    font-size: 2rem;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
     
   }
+  .add-button{
+    font-size: 2rem;
+  }
+
   
   .add-button:hover {
     color: #0056b3;
   }
+
+  .remove-button{
+    font-size: 1.5rem;
+  }
   
+  .remove-button:hover {
+    color: red;
+  }

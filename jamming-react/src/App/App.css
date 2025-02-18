@@ -6,7 +6,7 @@
 
 .title{
   font-size: 7rem;
-  color: rgb(236, 161, 236);
+  color: rgb(255, 255, 255);
 }
 
 .container {
@@ -18,13 +18,23 @@
 .column1 {
   flex: 1rem; /* Each column takes equal width */
   padding: 20px;
-  background-color: lightgray;
   text-align: center;
 }
-.column2 {
+.column_playlist {
   flex: 1rem; /* Each column takes equal width */
   padding: 20px;
-  background-color: lightgray;
   text-align: center;
   float: right;
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50; /* Green background */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 }

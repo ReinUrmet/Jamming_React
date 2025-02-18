@@ -1,10 +1,22 @@
 .column_playlist{
     width: 40rem;
     height: auto;
-    background-color: rgb(146, 119, 197);
-    margin: 10px;
+    background-color: rgba(1, 1, 1, 0.7);
+    margin: 0;
+    padding: 20px;
 }
 
-h2{
+.naming_playlist{
+    color: white;
+    background-color: rgba(1, 1, 1, 0);
+    width: 100%;
+    float: left;
+    border: 0;
+    border-bottom: 1px solid white;
+    height: 80px;
+    margin: 40px 0;
     font-size: 3rem;
+    padding-top: 0.5rem;
+    
 }
+

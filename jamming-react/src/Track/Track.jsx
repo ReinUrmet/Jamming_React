@@ -1,11 +1,17 @@
-// Track.jsx
 import React from "react";
 import "./Track.css";
 
-function Track({ track }) {
-  // When the add button is clicked, log the track's name
+function Track({ track, onAdd, onRemove }) {
   const handleAddTrack = () => {
-    console.log(`Added: ${track.name}`);
+    if (onAdd) {
+      onAdd(track);
+    }
+  };
+
+  const handleRemoveTrack = () => {
+    if (onRemove) {
+      onRemove(track);
+    }
   };
 
   return (
@@ -14,9 +20,16 @@ function Track({ track }) {
         <h3>{track.name}</h3>
         <p>{track.artist} ┃ {track.album}</p>
       </div>
-      <button className="add-button" onClick={handleAddTrack}>
-        +
-      </button>
+      {onAdd && (
+        <button className="add-button" onClick={handleAddTrack}>
+          +
+        </button>
+      )}
+      {onRemove && (
+        <button className="remove-button" onClick={handleRemoveTrack}>
+          –
+        </button>
+      )}
     </div>
   );
 }

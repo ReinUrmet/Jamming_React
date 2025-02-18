@@ -1,75 +1,123 @@
 // SpotifyAuth.js
-
-// 1. Configuration variables for Spotify API authentication
-const clientId = "89bdfd0100ca4a79ace001736d341676"; 
+const clientId = "89bdfd0100ca4a79ace001736d341676";
 const redirectUri = "http://localhost:5173/callback";
-const scope = "playlist-modify-public"; 
+const scope = "playlist-modify-public";
 
-//loon variable accessToken
 let accessToken;
 
-// objekt mis hoiab mu teisi funktsioone, jooksutab, getAccess token funktsiooni, et saada access tokenit ja kui juba on see ss returnib kohe selle.
 const SpotifyAuth = {
   getAccessToken() {
     if (accessToken) {
       return accessToken;
     }
 
-    // 4. Check if the access token is present in the URL (after redirection from Spotify login)
+    // Check if the access token is present in the URL (after redirection from Spotify login)
     const tokenMatch = window.location.href.match(/access_token=([^&]*)/);
     const expiresMatch = window.location.href.match(/expires_in=([^&]*)/);
 
     if (tokenMatch && expiresMatch) {
       // Extract the token from the URL
       accessToken = tokenMatch[1];
-
-      // konverteerin aja stringist numbriks
       const expiresIn = Number(expiresMatch[1]);
 
-      // Settupin timeri kaua access token aktiivne on
+      // Clear the access token after it expires
       window.setTimeout(() => (accessToken = ""), expiresIn * 1000);
 
-      // Some security stuff, et ei naitaks url'is tokenit
+      // Remove the token from the URL for security
       window.history.pushState("Access Token", null, "/");
 
       return accessToken;
     } else {
-      // Kui ei ole tokenit siis loob spotify lingi ja saadab inimese sinna
+      // If there's no token, redirect to Spotify's authorization page
       const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}` +
-                `&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}` +
-                `&scope=${encodeURIComponent(scope)}`;
+                      `&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}` +
+                      `&scope=${encodeURIComponent(scope)}`;
 
-
-      window.location = authUrl; // Redirects the browser to Spotify's login/authorization page
+      window.location = authUrl;
     }
   },
 
-  // Selle meetodiga saab otsida ss TRACKE spotifyst
+  // Search for tracks on Spotify
   async search(term) {
-    // Siin saab valid access tokeni
     const token = SpotifyAuth.getAccessToken();
 
-    // 8. Teen API requesti spotify endpointi
     const response = await fetch(
       `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(term)}`,
       {
-        headers: { Authorization: `Bearer ${token}` }, 
+        headers: { Authorization: `Bearer ${token}` },
       }
     );
 
-    // ootan spoyify response
     const jsonResponse = await response.json();
 
-    // Kui on tracke siis returnin need, kui ei siis see line returnib tühja array
     if (!jsonResponse.tracks) return [];
 
-    // kasutan map et minna üle igast array elemendist ja eraldan need
+    // Note: Added the "uri" property which is needed when adding tracks to a playlist
     return jsonResponse.tracks.items.map((track) => ({
       id: track.id,
       name: track.name,
       artist: track.artists[0].name,
       album: track.album.name,
+      uri: track.uri,
     }));
+  },
+
+  // Save a playlist to Spotify
+  async savePlaylist(playlistName, trackURIs) {
+    if (!playlistName || !trackURIs || trackURIs.length === 0) return;
+
+    const token = SpotifyAuth.getAccessToken();
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+
+    try {
+      // 1. Get the current user's Spotify ID
+      const userResponse = await fetch("https://api.spotify.com/v1/me", {
+        headers,
+      });
+      if (!userResponse.ok) throw new Error("Failed to fetch user information");
+      const userData = await userResponse.json();
+      const userId = userData.id;
+
+      // 2. Create a new playlist for the user
+      const createPlaylistResponse = await fetch(
+        `https://api.spotify.com/v1/users/${userId}/playlists`,
+        {
+          headers,
+          method: "POST",
+          body: JSON.stringify({
+            name: playlistName,
+            description: "Created with Jamming",
+            public: true, // or false if you want a private playlist
+          }),
+        }
+      );
+      if (!createPlaylistResponse.ok)
+        throw new Error("Failed to create playlist");
+      const playlistData = await createPlaylistResponse.json();
+      const playlistId = playlistData.id;
+
+      // 3. Add tracks to the newly created playlist
+      const addTracksResponse = await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+          headers,
+          method: "POST",
+          body: JSON.stringify({
+            uris: trackURIs,
+          }),
+        }
+      );
+      if (!addTracksResponse.ok)
+        throw new Error("Failed to add tracks to playlist");
+
+      console.log(`Playlist "${playlistName}" saved to Spotify successfully!`);
+      return await addTracksResponse.json();
+    } catch (error) {
+      console.error("Error saving playlist to Spotify:", error);
+    }
   },
 };
 

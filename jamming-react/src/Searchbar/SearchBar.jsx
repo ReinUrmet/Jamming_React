@@ -27,11 +27,11 @@ function SearchBar({ onSearch }) {
           className="search-bar-input"
           value={term}
           onChange={(e) => setTerm(e.target.value)}
-          onKeyPress={handleKeyPress} // Calls search when Enter is pressed
+          onKeyPress={handleKeyPress} 
         />
-        <FaSearch className="search-bar-icon" onClick={handleSearch} /> {/* Keep FaSearch inside the search bar */}
+        <FaSearch className="search-bar-icon" onClick={handleSearch} />
       </div>
-      <SearchButton onSearch={handleSearch} /> {/* Keep Search Button separate */}
+      <SearchButton onSearch={handleSearch} />
     </div>
   );
 }
