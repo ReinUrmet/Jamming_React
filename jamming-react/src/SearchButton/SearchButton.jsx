@@ -1,10 +1,10 @@
 import React from "react";
 import "./SearchButton.css"; // Import the CSS file
 
-function SearchButton() {
+function SearchButton({ onSearch }) {
   return (
     <div className="button">
-        <button>Search</button>
+      <button onClick={onSearch}>Search</button>
     </div>
   );
 }

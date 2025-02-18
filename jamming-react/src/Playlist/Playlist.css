@@ -1,7 +1,8 @@
-.column1{
+.column_playlist{
     width: 40rem;
-    height: 60rem;
+    height: auto;
     background-color: rgb(146, 119, 197);
+    margin: 10px;
 }
 
 h2{

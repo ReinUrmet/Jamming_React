@@ -1,8 +1,9 @@
+// Track.jsx
 import React from "react";
-import "./Track.css"; 
+import "./Track.css";
 
 function Track({ track }) {
-  // Define the function before using it
+  // When the add button is clicked, log the track's name
   const handleAddTrack = () => {
     console.log(`Added: ${track.name}`);
   };
@@ -13,8 +14,10 @@ function Track({ track }) {
         <h3>{track.name}</h3>
         <p>{track.artist} ┃ {track.album}</p>
       </div>
-      <button className="add-button" onClick={handleAddTrack}>+</button>
-    </div>  
+      <button className="add-button" onClick={handleAddTrack}>
+        +
+      </button>
+    </div>
   );
 }
 

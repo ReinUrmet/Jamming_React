@@ -8,3 +8,23 @@
   font-size: 7rem;
   color: rgb(236, 161, 236);
 }
+
+.container {
+  display: flex;
+  gap: 50px; /* Space between columns */
+  width: 80rem;
+}
+
+.column1 {
+  flex: 1rem; /* Each column takes equal width */
+  padding: 20px;
+  background-color: lightgray;
+  text-align: center;
+}
+.column2 {
+  flex: 1rem; /* Each column takes equal width */
+  padding: 20px;
+  background-color: lightgray;
+  text-align: center;
+  float: right;
+}

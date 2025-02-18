@@ -1,16 +1,18 @@
+// TrackList.jsx
 import React from "react";
-import Track from "../Track/Track.jsx";
-import "./Tracklist.css"; // Import the CSS file
+import "./Tracklist.css";
+import Track from "../Track/Track";
 
-function Tracklist( {tracks} ) {
-
+function TrackList({ tracks }) {
   return (
     <div>
-        {tracks.map(track => (
-            <Track key={tracks.id} track= {track} />
-        ))}
+      {tracks && tracks.length > 0 ? (
+        tracks.map((track) => <Track key={track.id} track={track} />)
+      ) : (
+        <p>No tracks found.</p>
+      )}
     </div>
   );
 }
 
-export default Tracklist;
+export default TrackList;
