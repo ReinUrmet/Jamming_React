@@ -1,5 +1,5 @@
 // SpotifyAuth.js
-const clientId = "89bdfd0100ca4a79ace001736d341676";
+const clientId = "Tuleb lisada key";
 const redirectUri = "http://localhost:5173/callback";
 const scope = "playlist-modify-public";
 
